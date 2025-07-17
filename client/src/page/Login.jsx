@@ -1,60 +1,83 @@
-import React from 'react';
-import { FiLock, FiMail } from 'react-icons/fi';
+import React, { useState } from "react";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom"; // ⬅️ Import useNavigate
+import 'react-toastify/dist/ReactToastify.css';
+import { FaEnvelope, FaLock } from "react-icons/fa";
 
 const Login = () => {
-    return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-100 to-purple-300">
-            <div className="bg-white shadow-2xl rounded-xl p-8 w-full max-w-md animate-fade-in">
-                <h2 className="text-3xl font-bold text-center text-purple-700 mb-6">Welcome Back</h2>
+  const navigate = useNavigate(); // ⬅️ Initialize navigate
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-                <form className="space-y-6">
-                    <div className="relative">
-                        <FiMail className="absolute top-1/2 left-3 transform -translate-y-1/2 text-purple-600" />
-                        <input
-                            type="email"
-                            required
-                            placeholder="Email"
-                            className="w-full pl-10 pr-4 py-2 border border-purple-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 transition"
-                        />
-                    </div>
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post("http://localhost:5000/api/auth/login", { email, password });
+      toast.success("Login successful");
+      localStorage.setItem("token", res.data.token);
+      setTimeout(() => {
+        navigate("/profile"); // ⬅️ Redirect to /profile
+      }, 1500); // Delay to show toast
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Login failed");
+    }
+  };
 
-                    <div className="relative">
-                        <FiLock className="absolute top-1/2 left-3 transform -translate-y-1/2 text-purple-600" />
-                        <input
-                            type="password"
-                            required
-                            placeholder="Password"
-                            className="w-full pl-10 pr-4 py-2 border border-purple-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 transition"
-                        />
-                    </div>
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-300 via-pink-200 to-yellow-100 p-4">
+      <ToastContainer />
+      <div className="bg-white shadow-2xl rounded-3xl px-10 py-12 max-w-md w-full">
+        <h2 className="text-4xl font-bold text-center text-purple-700 mb-2">Login</h2>
+        <p className="text-center text-gray-500 mb-6">Access your account</p>
 
-                    <div className="flex justify-between text-sm text-gray-600">
-                        <label className="flex items-center gap-2">
-                            <input type="checkbox" className="accent-purple-600" />
-                            Remember Me
-                        </label>
-                        <a href="/forgot-password" className="text-purple-700 hover:underline">
-                            Forgot Password?
-                        </a>
-                    </div>
+        <form onSubmit={handleLogin} className="space-y-5">
+          {/* Email */}
+          <div className="relative">
+            <FaEnvelope className="absolute left-4 top-3 text-purple-500" />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-400"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
 
-                    <button
-                        type="submit"
-                        className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-md transition"
-                    >
-                        Login
-                    </button>
-                </form>
+          {/* Password */}
+          <div className="relative">
+            <FaLock className="absolute left-4 top-3 text-purple-500" />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-400"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
 
-                <p className="mt-6 text-center text-sm text-gray-700">
-                    Don’t have an account?
-                    <a href="/register" className="text-purple-700 font-semibold hover:underline ml-1">
-                        Register
-                    </a>
-                </p>
-            </div>
-        </div>
-    );
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded-full transition duration-300 shadow-md"
+          >
+            Login
+          </button>
+        </form>
+
+        <p className="mt-6 text-sm text-center text-gray-600">
+          Don't have an account?{" "}
+          <a href="/signup" className="text-purple-600 font-semibold hover:underline">
+            Signup
+          </a>
+        </p>
+      </div>
+    </div>
+  );
 };
 
 export default Login;

@@ -1,98 +1,101 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 
 const Signup = () => {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
-    });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
+  const handleChange = (e) => {
+    setForm((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log("Form Submitted", formData);
-        // You can add validation and API calls here
-    };
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:5000/api/auth/signup", form);
+      toast.success("Signup successful. Please login.");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Signup failed");
+    }
+  };
 
-    return (
-        <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-100 to-purple-300 p-4">
-            <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md">
-                <h2 className="text-2xl font-bold text-center text-purple-700 mb-6">Create an Account</h2>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Full Name</label>
-                        <input
-                            type="text"
-                            name="name"
-                            placeholder="Your name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            required
-                            className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-400 outline-none"
-                        />
-                    </div>
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-300 via-pink-200 to-yellow-100 p-4">
+      <ToastContainer />
+      <div className="bg-white shadow-2xl rounded-3xl px-10 py-12 max-w-md w-full">
+        <h2 className="text-4xl font-bold text-center text-purple-700 mb-2">Sign Up</h2>
+        <p className="text-center text-gray-500 mb-6">Create your free account</p>
 
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Email Address</label>
-                        <input
-                            type="email"
-                            name="email"
-                            placeholder="you@example.com"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                            className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-400 outline-none"
-                        />
-                    </div>
+        <form onSubmit={handleSignup} className="space-y-5">
+          {/* Name */}
+          <div className="relative">
+            <FaUser className="absolute left-4 top-3 text-purple-500" />
+            <input
+              type="text"
+              name="name"
+              placeholder="Full Name"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-400"
+              value={form.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Password</label>
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder="••••••••"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
-                            className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-400 outline-none"
-                        />
-                    </div>
+          {/* Email */}
+          <div className="relative">
+            <FaEnvelope className="absolute left-4 top-3 text-purple-500" />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-400"
+              value={form.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Confirm Password</label>
-                        <input
-                            type="password"
-                            name="confirmPassword"
-                            placeholder="••••••••"
-                            value={formData.confirmPassword}
-                            onChange={handleChange}
-                            required
-                            className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-400 outline-none"
-                        />
-                    </div>
+          {/* Password */}
+          <div className="relative">
+            <FaLock className="absolute left-4 top-3 text-purple-500" />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-400"
+              value={form.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-                    <button
-                        type="submit"
-                        className="w-full bg-purple-600 text-white py-2 rounded-md hover:bg-purple-700 transition duration-300"
-                    >
-                        Sign Up
-                    </button>
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded-full transition duration-300 shadow-md"
+          >
+            Create Account
+          </button>
+        </form>
 
-                    <p className="text-sm text-center mt-4 text-gray-600">
-                        Already have an account?{' '}
-                        <Link to="/login" className="text-purple-600 hover:underline">
-                            Log In
-                        </Link>
-                    </p>
-                </form>
-            </div>
-        </div>
-    );
+        <p className="mt-6 text-sm text-center text-gray-600">
+          Already have an account?{" "}
+          <a href="/login" className="text-purple-600 font-semibold hover:underline">
+            Login
+          </a>
+        </p>
+      </div>
+    </div>
+  );
 };
 
 export default Signup;

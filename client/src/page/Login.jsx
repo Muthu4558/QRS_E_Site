@@ -13,16 +13,28 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", { email, password });
+      const res = await axios.post("http://localhost:5000/api/auth/login", {
+        email,
+        password,
+      });
+
       toast.success("Login successful");
+
+      // Optional: Save token (if your backend sends it, else remove this line)
       localStorage.setItem("token", res.data.token);
+
       setTimeout(() => {
-        navigate("/profile"); // ⬅️ Redirect to /profile
+        if (res.data.isAdmin) {
+          navigate("/admin"); // Admin route
+        } else {
+          navigate("/profile"); // Normal user route
+        }
       }, 1500); // Delay to show toast
     } catch (error) {
       toast.error(error.response?.data?.message || "Login failed");
     }
   };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-300 via-pink-200 to-yellow-100 p-4">

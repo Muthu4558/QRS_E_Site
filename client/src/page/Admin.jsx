@@ -2,13 +2,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { MdAddPhotoAlternate, MdDelete, MdEdit } from 'react-icons/md';
-import Navbar from '../components/Navbar';
+import { FaPlus, FaCheckCircle, FaTimesCircle, FaSignOutAlt } from 'react-icons/fa'; // ✅ Added logout icon
+import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { FaPlus } from 'react-icons/fa';
-import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
+import Navbar from '../components/Navbar';
 
 const Admin = () => {
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         name: '',
         price: '',
@@ -24,6 +26,11 @@ const Admin = () => {
     const [showModal, setShowModal] = useState(false);
     const [productToDelete, setProductToDelete] = useState(null);
 
+    // ✅ Fetch products on load
+    useEffect(() => {
+        fetchProducts();
+    }, []);
+
     const fetchProducts = async () => {
         try {
             const res = await axios.get('http://localhost:5000/api/products');
@@ -32,10 +39,6 @@ const Admin = () => {
             toast.error('❌ Failed to load products');
         }
     };
-
-    useEffect(() => {
-        fetchProducts();
-    }, []);
 
     const handleChange = (e) => {
         const { name, value, files, type, checked } = e.target;
@@ -81,7 +84,14 @@ const Admin = () => {
     };
 
     const resetForm = () => {
-        setFormData({ name: '', price: '', offerPrice: '', category: 'Electronics', image: null, featured: false });
+        setFormData({
+            name: '',
+            price: '',
+            offerPrice: '',
+            category: 'Electronics',
+            image: null,
+            featured: false,
+        });
         setPreview(null);
         setEditingProductId(null);
         setShowModal(false);
@@ -97,7 +107,7 @@ const Admin = () => {
             featured: product.featured,
         });
         setEditingProductId(product._id);
-        setPreview(`/uploads/${product.image}`);
+        setPreview(`http://localhost:5000/uploads/${product.image}`);
         setShowModal(true);
     };
 
@@ -117,19 +127,47 @@ const Admin = () => {
         }
     };
 
+    // ✅ Admin Logout Function
+    const handleLogout = async () => {
+        try {
+            await axios.post("http://localhost:5000/api/auth/logout", {}, { withCredentials: true });
+            toast.success("Logged out");
+            setTimeout(() => {
+                navigate("/login");
+            }, 1000);
+        } catch (err) {
+            toast.error("Logout failed");
+        }
+    };
+
     return (
         <>
             <Navbar />
             <ToastContainer />
             <div className="mt-18 min-h-screen bg-gradient-to-tr from-violet-200 via-fuchsia-200 to-indigo-100 flex flex-col items-center justify-start p-6 gap-10">
+                {/* Logout */}
+                <div className="w-full max-w-6xl flex justify-end">
+                    <button
+                        onClick={handleLogout}
+                        className="flex items-center gap-2 text-white bg-red-500 px-4 py-2 rounded-xl font-semibold hover:bg-red-600 transition"
+                    >
+                        <FaSignOutAlt /> Logout
+                    </button>
+                </div>
+
+                {/* Product Inventory */}
                 <div className="w-full max-w-6xl bg-white shadow-[0_10px_25px_rgba(0,0,0,0.1)] rounded-3xl p-8 border border-purple-200">
                     <div className="flex justify-between items-center mb-6">
                         <h2 className="text-2xl font-bold text-purple-700">Product Inventory</h2>
-                        <button onClick={() => setShowModal(true)} className="flex gap-3 items-center bg-purple-600 text-white px-4 py-2 rounded-xl hover:bg-purple-700 transition">
+                        <button
+                            onClick={() => setShowModal(true)}
+                            className="flex gap-3 items-center bg-purple-600 text-white px-4 py-2 rounded-xl hover:bg-purple-700 transition"
+                        >
                             <span>Add Product</span>
                             <span><FaPlus /></span>
                         </button>
                     </div>
+
                     <div className="overflow-x-auto rounded-2xl shadow-md border border-purple-300">
                         <table className="min-w-full text-sm text-left text-gray-700 bg-white">
                             <thead className="bg-gradient-to-r from-purple-100 via-fuchsia-100 to-purple-200 sticky top-0 z-10 shadow">
@@ -145,9 +183,13 @@ const Admin = () => {
                             </thead>
                             <tbody>
                                 {products.map(product => (
-                                    <tr key={product._id} className="hover:bg-purple-50 transition duration-300 ease-in-out border-b border-purple-100">
+                                    <tr key={product._id} className="hover:bg-purple-50 transition border-b border-purple-100">
                                         <td className="px-6 py-3 text-center">
-                                            <img src={`http://localhost:5000/uploads/${product.image}`} alt={product.name} className="w-14 h-14 object-cover rounded-md mx-auto shadow" />
+                                            <img
+                                                src={`http://localhost:5000/uploads/${product.image}`}
+                                                alt={product.name}
+                                                className="w-14 h-14 object-cover rounded-md mx-auto shadow"
+                                            />
                                         </td>
                                         <td className="px-6 py-3">{product.name}</td>
                                         <td className="px-6 py-3">₹{product.price}</td>
@@ -175,6 +217,7 @@ const Admin = () => {
                     </div>
                 </div>
 
+                {/* Product Modal */}
                 {showModal && (
                     <div className="fixed inset-0 backdrop-blur-sm bg-opacity-40 flex justify-center items-center z-50">
                         <div className="bg-white rounded-3xl p-10 shadow-lg w-full max-w-2xl relative">
@@ -212,6 +255,7 @@ const Admin = () => {
                     </div>
                 )}
 
+                {/* Delete Confirmation Modal */}
                 {productToDelete && (
                     <div className="fixed inset-0 bg-opacity-40 backdrop-blur-sm flex justify-center items-center z-50">
                         <div className="bg-white rounded-3xl p-8 shadow-lg w-full max-w-md text-center relative">

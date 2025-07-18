@@ -29,7 +29,7 @@ const Navbar = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        <Link to="/" className="text-2xl font-bold text-purple-600">ShopNest</Link>
+        <Link to="/" className="text-2xl font-bold text-purple-600">QRS Product</Link>
 
         {/* Mobile toggle */}
         <div className="md:hidden">

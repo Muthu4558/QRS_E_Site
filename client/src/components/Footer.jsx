@@ -8,7 +8,7 @@ const Footer = () => {
         
         {/* Brand Info */}
         <div>
-          <h2 className="text-2xl font-bold text-purple-400 mb-2">ShopNest</h2>
+          <h2 className="text-2xl font-bold text-purple-400 mb-2">QRS Product</h2>
           <p className="text-gray-400">
             Discover quality products at unbeatable prices. Shop smart, live better with ShopNest.
           </p>
@@ -28,7 +28,7 @@ const Footer = () => {
         {/* Contact & Socials */}
         <div>
           <h3 className="text-xl font-semibold mb-3">Contact Us</h3>
-          <p className="text-gray-400 mb-4">hello@shopnest.com</p>
+          <p className="text-gray-400 mb-4">hello@qrsproduct.com</p>
           <div className="flex justify-center md:justify-start gap-4 text-xl">
             <a href="#" className="hover:text-purple-400 transition"><FaFacebookF /></a>
             <a href="#" className="hover:text-purple-400 transition"><FaInstagram /></a>
@@ -39,7 +39,7 @@ const Footer = () => {
       </div>
 
       <div className="mt-10 border-t border-gray-700 pt-4 text-center text-gray-500 text-sm">
-        &copy; 2025 ShopNest. All rights reserved.
+        &copy; 2025 QRS Product. All rights reserved.
       </div>
     </footer>
   );

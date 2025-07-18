@@ -32,17 +32,6 @@ export const loginUser = async (req, res) => {
     res.json(user);
 };
 
-export const googleLogin = async (req, res) => {
-    const { email, name, googleId } = req.body;
-    let user = await User.findOne({ email });
-    if (!user) {
-        user = await User.create({ name, email, googleId });
-    }
-    const token = generateToken(user._id);
-    res.cookie("token", token, { httpOnly: true });
-    res.json(user);
-};
-
 export const logoutUser = (req, res) => {
     res.clearCookie("token");
     res.json({ message: "Logged out" });

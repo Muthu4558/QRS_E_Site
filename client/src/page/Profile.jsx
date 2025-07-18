@@ -1,14 +1,31 @@
 import React from "react";
 import Navbar from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
 import { FaUserCircle, FaBoxOpen, FaMapMarkerAlt, FaEdit } from "react-icons/fa";
 
 const Profile = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
   return (
     <>
       <Navbar />
       <div className="min-h-screen bg-gray-100 py-10 px-4 mt-15">
         <div className="max-w-5xl mx-auto">
           <h1 className="text-3xl font-bold text-center mb-8 text-purple-700">My Profile</h1>
+          <div className="text-right mb-6">
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md"
+            >
+              Logout
+            </button>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Account Info */}
             <div className="bg-white shadow-md rounded-xl p-6">

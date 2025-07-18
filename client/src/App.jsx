@@ -4,6 +4,7 @@ import Login from "./page/Login";
 import Signup from "./page/Signup";
 import Profile from "./page/Profile";
 import Cart from "./page/Cart";
+import PrivateRoute from "./components/PrivateRoute"; // Reuse this
 
 const App = () => {
   return (
@@ -12,8 +13,24 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Signup />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/cart" element={<Cart />} />
+
+        {/* Protected Routes */}
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <PrivateRoute>
+              <Cart />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </Router>
   );

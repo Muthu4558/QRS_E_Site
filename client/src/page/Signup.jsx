@@ -3,6 +3,7 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
+import { useNavigate } from "react-router-dom"; // ✅ Add this
 
 const Signup = () => {
   const [form, setForm] = useState({
@@ -10,6 +11,8 @@ const Signup = () => {
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate(); // ✅ Initialize navigate
 
   const handleChange = (e) => {
     setForm((prev) => ({
@@ -21,8 +24,13 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/auth/signup", form);
-      toast.success("Signup successful. Please login.");
+      await axios.post("http://localhost:5000/api/auth/register", form, {
+        withCredentials: true, // ✅ Needed if using cookies
+      });
+      toast.success("Signup successful!");
+      setTimeout(() => {
+        navigate("/login"); // ✅ Redirect to profile
+      }, 1500); // Give the toast a moment to show
     } catch (error) {
       toast.error(error.response?.data?.message || "Signup failed");
     }

@@ -3,16 +3,17 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
-import { useNavigate } from "react-router-dom"; // ✅ Add this
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [form, setForm] = useState({
     name: "",
+    number:"",
     email: "",
     password: "",
   });
 
-  const navigate = useNavigate(); // ✅ Initialize navigate
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm((prev) => ({
@@ -53,6 +54,19 @@ const Signup = () => {
               placeholder="Full Name"
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-400"
               value={form.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="relative">
+            <FaUser className="absolute left-4 top-3 text-purple-500" />
+            <input
+              type="number"
+              name="number"
+              placeholder="Phone Number"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-400"
+              value={form.number}
               onChange={handleChange}
               required
             />

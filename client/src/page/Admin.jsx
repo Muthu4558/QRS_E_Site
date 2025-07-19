@@ -127,11 +127,15 @@ const Admin = () => {
         }
     };
 
-    // ✅ Admin Logout Function
     const handleLogout = async () => {
         try {
             await axios.post("http://localhost:5000/api/auth/logout", {}, { withCredentials: true });
+
+            // JWT from localStorage
+            localStorage.removeItem("token");
+
             toast.success("Logged out");
+
             setTimeout(() => {
                 navigate("/login");
             }, 1000);
@@ -139,6 +143,7 @@ const Admin = () => {
             toast.error("Logout failed");
         }
     };
+
 
     return (
         <>

@@ -58,7 +58,7 @@ const Electronics = () => {
   return (
     <>
       <Navbar />
-      <div className="container mx-auto px-4 sm:px-6 lg:px-36 mt-20 mb-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-36 mt-25 mb-20">
         <h2 className="text-3xl font-bold text-purple-700 mb-8 text-center">Explore Electronics</h2>
 
         {/* Filters */}

@@ -15,6 +15,9 @@ const Admin = () => {
         name: '',
         price: '',
         offerPrice: '',
+        description: '',
+        stock: '',
+        brand: '',
         category: 'Electronics',
         image: null,
         featured: false,
@@ -182,6 +185,9 @@ const Admin = () => {
                                     <th className="px-6 py-4 font-semibold border-b border-purple-200">Price</th>
                                     <th className="px-6 py-4 font-semibold border-b border-purple-200">Offer</th>
                                     <th className="px-6 py-4 font-semibold border-b border-purple-200">Category</th>
+                                    <th className="px-6 py-4 font-semibold border-b border-purple-200">Stock</th>
+                                    <th className="px-6 py-4 font-semibold border-b border-purple-200">Brand</th>
+                                    <th className="px-6 py-4 font-semibold border-b border-purple-200">Description</th>
                                     <th className="px-6 py-4 font-semibold border-b border-purple-200 text-center">Featured</th>
                                     <th className="px-6 py-4 font-semibold border-b border-purple-200 text-center">Actions</th>
                                 </tr>
@@ -200,6 +206,9 @@ const Admin = () => {
                                         <td className="px-6 py-3">₹{product.price}</td>
                                         <td className="px-6 py-3">{product.offerPrice ? `₹${product.offerPrice}` : '-'}</td>
                                         <td className="px-6 py-3">{product.category}</td>
+                                        <td className="px-6 py-3">{product.stock ?? "-"}</td>
+                                        <td className="px-6 py-3">{product.brand ?? "-"}</td>
+                                        <td className="px-6 py-3">{product.description}</td>
                                         <td className="px-6 py-3 text-center">
                                             {product.featured ? (
                                                 <FaCheckCircle className="text-green-500 text-xl mx-auto" />
@@ -224,41 +233,130 @@ const Admin = () => {
 
                 {/* Product Modal */}
                 {showModal && (
-                    <div className="fixed inset-0 backdrop-blur-sm bg-opacity-40 flex justify-center items-center z-50">
-                        <div className="bg-white rounded-3xl p-10 shadow-lg w-full max-w-2xl relative">
-                            <button onClick={resetForm} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl">×</button>
-                            <h2 className="text-3xl font-extrabold text-center mb-8 text-gradient bg-gradient-to-r from-purple-500 to-indigo-600 bg-clip-text text-transparent animate-pulse">
-                                {editingProductId ? 'Update Product ' : 'Add New Product '}
+                    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50">
+                        <div className="bg-white rounded-3xl shadow-lg w-full max-w-2xl max-h-screen overflow-y-auto p-6 sm:p-10 relative">
+                            <button
+                                onClick={resetForm}
+                                className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl"
+                            >
+                                ×
+                            </button>
+
+                            <h2 className="text-2xl sm:text-3xl font-extrabold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-indigo-600 animate-pulse">
+                                {editingProductId ? 'Update Product' : 'Add New Product'}
                             </h2>
-                            <form onSubmit={handleSubmit} className="space-y-6">
-                                <input name="name" value={formData.name} onChange={handleChange} placeholder="Product Name" required className="w-full px-5 py-3 border border-purple-300 rounded-xl shadow-sm focus:ring-2 focus:ring-purple-400 transition" />
+
+                            <form onSubmit={handleSubmit} className="space-y-5">
+                                <input
+                                    name="name"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    placeholder="Product Name"
+                                    required
+                                    className="w-full px-4 py-3 border border-purple-300 rounded-xl shadow-sm focus:ring-2 focus:ring-purple-400 transition"
+                                />
+
                                 <div className="grid grid-cols-2 gap-4">
-                                    <input name="price" type="number" value={formData.price} onChange={handleChange} placeholder="Price" required className="w-full px-5 py-3 border border-purple-300 rounded-xl shadow-sm focus:ring-2 focus:ring-purple-400 transition" />
-                                    <input name="offerPrice" type="number" value={formData.offerPrice} onChange={handleChange} placeholder="Offer Price" className="w-full px-5 py-3 border border-purple-300 rounded-xl shadow-sm focus:ring-2 focus:ring-purple-400 transition" />
+                                    <input
+                                        name="price"
+                                        type="number"
+                                        value={formData.price}
+                                        onChange={handleChange}
+                                        placeholder="Price"
+                                        required
+                                        className="w-full px-4 py-3 border border-purple-300 rounded-xl shadow-sm focus:ring-2 focus:ring-purple-400 transition"
+                                    />
+                                    <input
+                                        name="offerPrice"
+                                        type="number"
+                                        value={formData.offerPrice}
+                                        onChange={handleChange}
+                                        placeholder="Offer Price"
+                                        className="w-full px-4 py-3 border border-purple-300 rounded-xl shadow-sm focus:ring-2 focus:ring-purple-400 transition"
+                                    />
                                 </div>
-                                <select name="category" value={formData.category} onChange={handleChange} className="w-full px-5 py-3 border border-purple-300 rounded-xl shadow-sm focus:ring-2 focus:ring-purple-400 transition">
+
+                                <div className="grid grid-cols-2 gap-4">
+                                    <input
+                                        name="stock"
+                                        type="number"
+                                        min="0"
+                                        value={formData.stock}
+                                        onChange={handleChange}
+                                        placeholder="Stock"
+                                        className="w-full px-4 py-3 border border-purple-300 rounded-xl shadow-sm focus:ring-2 focus:ring-purple-400 transition"
+                                    />
+                                    <input
+                                        name="brand"
+                                        type="text"
+                                        value={formData.brand}
+                                        onChange={handleChange}
+                                        placeholder="Brand"
+                                        className="w-full px-4 py-3 border border-purple-300 rounded-xl shadow-sm focus:ring-2 focus:ring-purple-400 transition"
+                                    />
+                                </div>
+
+                                <select
+                                    name="category"
+                                    value={formData.category}
+                                    onChange={handleChange}
+                                    className="w-full px-4 py-3 border border-purple-300 rounded-xl shadow-sm focus:ring-2 focus:ring-purple-400 transition"
+                                >
                                     <option>Electronics</option>
                                     <option>Clothing</option>
                                     <option>Accessories</option>
                                 </select>
+
+                                <textarea
+                                    name="description"
+                                    value={formData.description}
+                                    onChange={handleChange}
+                                    placeholder="Description"
+                                    className="w-full px-4 py-3 border border-purple-300 rounded-xl shadow-sm focus:ring-2 focus:ring-purple-400 transition"
+                                />
+
                                 <div className="flex items-center gap-3">
-                                    <input type="checkbox" name="featured" checked={formData.featured} onChange={handleChange} className="w-4 h-4 text-purple-600" />
+                                    <input
+                                        type="checkbox"
+                                        name="featured"
+                                        checked={formData.featured}
+                                        onChange={handleChange}
+                                        className="w-4 h-4 text-purple-600"
+                                    />
                                     <label className="text-sm text-gray-700">Show on Home Page</label>
                                 </div>
+
                                 <div className="flex items-center gap-4">
                                     <label className="flex items-center justify-center w-32 h-32 bg-purple-50 hover:bg-purple-100 text-purple-600 border border-dashed border-purple-300 rounded-2xl cursor-pointer transition">
                                         <MdAddPhotoAlternate size={34} />
-                                        <input type="file" name="image" accept="image/*" onChange={handleChange} className="hidden" />
+                                        <input
+                                            type="file"
+                                            name="image"
+                                            accept="image/*"
+                                            onChange={handleChange}
+                                            className="hidden"
+                                        />
                                     </label>
-                                    {preview && <img src={preview} alt="Preview" className="w-32 h-32 object-cover rounded-2xl border border-purple-300 shadow" />}
+                                    {preview && (
+                                        <img
+                                            src={preview}
+                                            alt="Preview"
+                                            className="w-32 h-32 object-cover rounded-2xl border border-purple-300 shadow"
+                                        />
+                                    )}
                                 </div>
-                                <button type="submit" className="w-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white py-3 rounded-2xl font-bold shadow-md hover:scale-[1.03] transition-transform">
+
+                                <button
+                                    type="submit"
+                                    className="w-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white py-3 rounded-2xl font-bold shadow-md hover:scale-[1.03] transition-transform"
+                                >
                                     {editingProductId ? 'Update Product' : 'Add Product'}
                                 </button>
                             </form>
                         </div>
                     </div>
                 )}
+
 
                 {/* Delete Confirmation Modal */}
                 {productToDelete && (

@@ -1,8 +1,10 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaShoppingCart } from "react-icons/fa";
 
 const ProductCard = ({ product }) => {
+    const navigate = useNavigate();
+
     return (
         <motion.div
             className="bg-white rounded-2xl p-4 shadow-lg hover:shadow-2xl transition duration-300 relative group w-full max-w-[380px] mx-auto"
@@ -30,9 +32,11 @@ const ProductCard = ({ product }) => {
             {/* Action Buttons */}
             <div className="mt-4 flex gap-3">
                 <button className="w-1/2 py-2 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition">
-                    Buy Now
+                    Add to Cart
                 </button>
-                <button className="w-1/2 py-2 border border-gray-300 text-gray-800 rounded-xl hover:bg-gray-100 transition">
+                <button
+                    onClick={() => navigate(`/products/${product._id}`)}
+                    className="w-1/2 py-2 border border-gray-300 text-gray-800 rounded-xl hover:bg-gray-100 transition">
                     View
                 </button>
             </div>

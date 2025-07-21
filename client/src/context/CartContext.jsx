@@ -28,7 +28,7 @@ export function CartProvider({ children }) {
         credentials: "include",
       });
       if (res.status === 401) {
-        handleAuthError({ response: { status: 401 } });
+        // handleAuthError({ response: { status: 401 } });
         setCartItems([]);
         return;
       }

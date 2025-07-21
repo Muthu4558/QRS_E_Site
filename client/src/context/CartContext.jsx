@@ -15,13 +15,11 @@ export function CartProvider({ children }) {
   const navigate = useNavigate();
 
   function handleAuthError(error, showAlert = false) {
-    if (error.response && error.response.status === 401) {
-      if (showAlert) {
-        toast.error("Please log in to add products to your cart.");
-      }
-      navigate("/login");
-    }
+  if (error.response?.status === 401) {
+    if (showAlert) toast.error("Please log in to add products.");
+    navigate("/login");
   }
+}
 
   const fetchCart = async () => {
     setLoading(true);
@@ -44,23 +42,25 @@ export function CartProvider({ children }) {
   };
 
   const addToCart = async (product) => {
-    try {
-      const res = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/cart/add`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ productId: product._id, quantity: 1 }),
-      });
-      if (res.status === 401) {
-        handleAuthError({ response: { status: 401 } }, true);
-        return;
-      }
-      await fetchCart();
-      toast.success(`${product.name} added to cart!`);
-    } catch (err) {
-      toast.error("Failed to add to cart.");
+  try {
+    const res = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/cart/add`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ productId: product._id, quantity: 1 })
+    });
+
+    if (res.status === 401) {
+      handleAuthError({ response: { status: 401 } }, true);
+      return; // essential!
     }
-  };
+
+    await fetchCart();
+    toast.success(`${product.name} added to cart!`);
+  } catch {
+    toast.error("Failed to add to cart.");
+  }
+};
 
   const removeFromCart = async (productId) => {
     try {
@@ -116,23 +116,23 @@ export function CartProvider({ children }) {
     }
   };
 
-    const checkoutCart = async () => {
-  try {
-    const res = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/cart/checkout`, {
-      method: "POST",
-      credentials: "include",
-    });
-    if (res.status === 401) {
-      handleAuthError({ response: { status: 401 } });
-      return;
+  const checkoutCart = async () => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/cart/checkout`, {
+        method: "POST",
+        credentials: "include",
+      });
+      if (res.status === 401) {
+        handleAuthError({ response: { status: 401 } });
+        return;
+      }
+      await fetchCart();
+      toast.success("Checkout successful!");
+      navigate("/thankyou"); // optional: create Thank You page
+    } catch (err) {
+      toast.error("Checkout failed.");
     }
-    await fetchCart();
-    toast.success("Checkout successful!");
-    navigate("/thankyou"); // optional: create Thank You page
-  } catch (err) {
-    toast.error("Checkout failed.");
-  }
-};
+  };
 
   useEffect(() => {
     fetchCart();

@@ -11,7 +11,7 @@ const FeaturedProducts = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/products/featured/all")
+    axios.get(`${import.meta.env.VITE_APP_BASE_URL}/api/products/featured/all`)
       .then(res => setProducts(res.data))
       .catch(err => console.error("Error fetching featured products:", err));
   }, []);

@@ -107,7 +107,7 @@ const Cart = () => {
                   >
                     <div className="flex items-center gap-4 flex-1">
                       <img
-                        src={`http://localhost:5000/uploads/${item.product.image}`}
+                        src={`${import.meta.env.VITE_APP_BASE_URL}/uploads/${item.product.image}`}
                         alt={item.product.name}
                         className="w-24 h-24 object-cover rounded-lg border"
                       />

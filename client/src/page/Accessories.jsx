@@ -16,7 +16,7 @@ const Accessories = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/products/Accessories")
+      .get(`${import.meta.env.VITE_APP_BASE_URL}/api/products/Accessories`)
       .then((res) => setProducts(res.data))
       .catch((err) => console.log(err));
   }, []);

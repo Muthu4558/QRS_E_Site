@@ -36,7 +36,7 @@ const Admin = () => {
 
     const fetchProducts = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/products');
+            const res = await axios.get(`${import.meta.env.VITE_APP_BASE_URL}/api/products`);
             setProducts(res.data);
         } catch (err) {
             toast.error('❌ Failed to load products');
@@ -69,12 +69,12 @@ const Admin = () => {
 
         try {
             if (editingProductId) {
-                await axios.put(`http://localhost:5000/api/products/update/${editingProductId}`, data, {
+                await axios.put(`${import.meta.env.VITE_APP_BASE_URL}/api/products/update/${editingProductId}`, data, {
                     headers: { 'Content-Type': 'multipart/form-data' },
                 });
                 toast.success('✅ Product updated successfully');
             } else {
-                await axios.post('http://localhost:5000/api/products/add', data, {
+                await axios.post(`${import.meta.env.VITE_APP_BASE_URL}/api/products/add`, data, {
                     headers: { 'Content-Type': 'multipart/form-data' },
                 });
                 toast.success('🎉 Product added successfully');
@@ -110,7 +110,7 @@ const Admin = () => {
             featured: product.featured,
         });
         setEditingProductId(product._id);
-        setPreview(`http://localhost:5000/uploads/${product.image}`);
+        setPreview(`${import.meta.env.VITE_APP_BASE_URL}/uploads/${product.image}`);
         setShowModal(true);
     };
 
@@ -120,7 +120,7 @@ const Admin = () => {
 
     const confirmDelete = async () => {
         try {
-            await axios.delete(`http://localhost:5000/api/products/delete/${productToDelete}`);
+            await axios.delete(`${import.meta.env.VITE_APP_BASE_URL}/api/products/delete/${productToDelete}`);
             toast.success('🗑️ Product deleted');
             fetchProducts();
         } catch (err) {
@@ -132,7 +132,7 @@ const Admin = () => {
 
     const handleLogout = async () => {
         try {
-            await axios.post("http://localhost:5000/api/auth/logout", {}, { withCredentials: true });
+            await axios.post(`${import.meta.env.VITE_APP_BASE_URL}/api/auth/logout`, {}, { withCredentials: true });
 
             // JWT from localStorage
             localStorage.removeItem("token");
@@ -197,7 +197,7 @@ const Admin = () => {
                                     <tr key={product._id} className="hover:bg-purple-50 transition border-b border-purple-100">
                                         <td className="px-6 py-3 text-center">
                                             <img
-                                                src={`http://localhost:5000/uploads/${product.image}`}
+                                                src={`${import.meta.env.VITE_APP_BASE_URL}/uploads/${product.image}`}
                                                 alt={product.name}
                                                 className="w-14 h-14 object-cover rounded-md mx-auto shadow"
                                             />

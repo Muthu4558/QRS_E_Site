@@ -19,7 +19,7 @@ const ProductCard = ({ product }) => {
 
             {/* Product Image */}
             <img
-                src={`http://localhost:5000/uploads/${product.image}`}
+                src={`${import.meta.env.VITE_APP_BASE_URL}/uploads/${product.image}`}
                 alt={product.name}
                 className="h-64 w-full object-cover rounded-lg"
             />

@@ -16,7 +16,7 @@ const Electronics = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/products/Electronics")
+      .get(`${import.meta.env.VITE_APP_BASE_URL}/api/products/Electronics`)
       .then((res) => {
         setProducts(res.data);
         setFilteredProducts(res.data);

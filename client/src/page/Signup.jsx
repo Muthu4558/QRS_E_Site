@@ -25,7 +25,7 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/auth/register", form, {
+      await axios.post(`${import.meta.env.VITE_APP_BASE_URL}/api/auth/register`, form, {
         withCredentials: true, // ✅ Needed if using cookies
       });
       toast.success("Signup successful!");

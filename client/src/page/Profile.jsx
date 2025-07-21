@@ -22,7 +22,7 @@ const Profile = () => {
 
   const fetchProfile = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/auth/profile", {
+      const res = await axios.get(`${import.meta.env.VITE_APP_BASE_URL}/api/auth/profile`, {
         withCredentials: true,
       });
       setProfile(res.data);
@@ -39,7 +39,7 @@ const Profile = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:5000/api/auth/logout", {}, {
+      await axios.post(`${import.meta.env.VITE_APP_BASE_URL}/api/auth/logout`, {}, {
         withCredentials: true,
       });
       navigate("/login");
@@ -55,7 +55,7 @@ const Profile = () => {
 
   const handleSave = async () => {
     try {
-      const res = await axios.put("http://localhost:5000/api/auth/profile", formData, {
+      const res = await axios.put(`${import.meta.env.VITE_APP_BASE_URL}/api/auth/profile`, formData, {
         withCredentials: true,
       });
       setProfile(res.data);

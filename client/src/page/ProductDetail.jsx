@@ -17,7 +17,7 @@ const ProductDetail = () => {
     const [activeTab, setActiveTab] = useState("specs");
 
     useEffect(() => {
-        fetch(`http://localhost:5000/api/products/id/${id}`)
+        fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/products/id/${id}`)
             .then((res) => res.json())
             .then((data) => {
                 setProduct(data);
@@ -62,7 +62,7 @@ const ProductDetail = () => {
                         style={{ perspective: 1000 }}
                     >
                         <motion.img
-                            src={`http://localhost:5000/uploads/${product.image}`}
+                            src={`${import.meta.env.VITE_APP_BASE_URL}/uploads/${product.image}`}
                             alt={product.name}
                             className="rounded-xl object-contain max-h-[450px] cursor-zoom-in"
                             whileHover={{ scale: 1.2 }}

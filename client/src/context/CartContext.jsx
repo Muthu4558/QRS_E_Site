@@ -26,7 +26,7 @@ export function CartProvider({ children }) {
   const fetchCart = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/cart`, {
+      const res = await fetch("/api/cart", {
         credentials: "include",
       });
       if (res.status === 401) {

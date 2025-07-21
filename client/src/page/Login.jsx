@@ -30,7 +30,7 @@ const Login = () => {
         if (res.data.isAdmin) {
           navigate("/admin"); // Admin route
         } else {
-          navigate("/profile"); // Normal user route
+          navigate("/"); // Normal user route
         }
       }, 1500); // Delay to show toast
     } catch (error) {

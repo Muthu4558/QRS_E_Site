@@ -1,3 +1,4 @@
+import { useCart } from "../context/CartContext";
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
@@ -10,6 +11,7 @@ const starCount = 5;
 const ProductDetail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const { addToCart } = useCart();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState("specs");
@@ -112,6 +114,7 @@ const ProductDetail = () => {
                             <motion.button
                                 whileHover={{ scale: 1.07, boxShadow: "0 8px 24px rgba(13, 148, 136, .17)" }}
                                 whileTap={{ scale: 0.97 }}
+                                onClick={() => addToCart(product)}
                                 className="
                                     flex items-center justify-center
                                     gap-2

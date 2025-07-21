@@ -1,9 +1,11 @@
+import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaShoppingCart } from "react-icons/fa";
 
 const ProductCard = ({ product }) => {
     const navigate = useNavigate();
+    const { addToCart } = useCart();
 
     return (
         <motion.div
@@ -31,7 +33,9 @@ const ProductCard = ({ product }) => {
 
             {/* Action Buttons */}
             <div className="mt-4 flex gap-3">
-                <button className="w-1/2 py-2 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition">
+                <button 
+                    onClick={() => addToCart(product)}
+                    className="w-1/2 py-2 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition">
                     Add to Cart
                 </button>
                 <button

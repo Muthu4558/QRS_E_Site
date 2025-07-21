@@ -1,40 +1,41 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
-import { useNavigate } from "react-router-dom"; // ⬅️ Import useNavigate
+import { useNavigate } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
-import { FaEnvelope, FaLock } from "react-icons/fa";
+import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
-  const navigate = useNavigate(); // ⬅️ Initialize navigate
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
-      const res = await axios.post(`${import.meta.env.VITE_APP_BASE_URL}/api/auth/login`, {
-        email,
-        password,
-      },
-    {
-      withCredentials: true
-    });
+      const res = await axios.post(
+        `${import.meta.env.VITE_APP_BASE_URL}/api/auth/login`,
+        { email, password },
+        { withCredentials: true }
+      );
 
       toast.success("Login successful");
-
-      // Optional: Save token (if your backend sends it, else remove this line)
       localStorage.setItem("token", res.data.token);
 
       setTimeout(() => {
         if (res.data.isAdmin) {
-          navigate("/admin"); // Admin route
+          navigate("/admin");
         } else {
-          navigate("/"); // Normal user route
+          navigate("/");
         }
-      }, 1500); // Delay to show toast
+      }, 1500);
     } catch (error) {
       toast.error(error.response?.data?.message || "Login failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -64,22 +65,55 @@ const Login = () => {
           <div className="relative">
             <FaLock className="absolute left-4 top-3 text-purple-500" />
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Password"
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-400"
+              className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-400"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            <span
+              className="absolute right-4 top-3 cursor-pointer text-purple-500"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
           </div>
 
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded-full transition duration-300 shadow-md"
+            className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded-full transition duration-300 shadow-md flex items-center justify-center"
+            disabled={loading}
           >
-            Login
+            {loading ? (
+              <div className="flex items-center gap-2">
+                <svg
+                  className="animate-spin h-5 w-5 text-white"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v8H4z"
+                  ></path>
+                </svg>
+                Logging in...
+              </div>
+            ) : (
+              "Login"
+            )}
           </button>
         </form>
 

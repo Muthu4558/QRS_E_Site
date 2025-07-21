@@ -15,11 +15,11 @@ export function CartProvider({ children }) {
   const navigate = useNavigate();
 
   function handleAuthError(error, showAlert = false) {
-  if (error.response?.status === 401) {
-    if (showAlert) toast.error("Please log in to add products.");
-    navigate("/login");
+    if (error.response?.status === 401) {
+      if (showAlert) toast.error("Please log in to add products.");
+      navigate("/login");
+    }
   }
-}
 
   const fetchCart = async () => {
     setLoading(true);
@@ -28,7 +28,6 @@ export function CartProvider({ children }) {
         credentials: "include",
       });
       if (res.status === 401) {
-        // handleAuthError({ response: { status: 401 } });
         setCartItems([]);
         return;
       }
@@ -37,30 +36,31 @@ export function CartProvider({ children }) {
     } catch (err) {
       setCartItems([]);
       toast.error("Failed to fetch cart items.");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const addToCart = async (product) => {
-  try {
-    const res = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/cart/add`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({ productId: product._id, quantity: 1 })
-    });
+    try {
+      const res = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/cart/add`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ productId: product._id, quantity: 1 }),
+      });
 
-    if (res.status === 401) {
-      handleAuthError({ response: { status: 401 } }, true);
-      return; // essential!
+      if (res.status === 401) {
+        handleAuthError({ response: { status: 401 } }, true);
+        return;
+      }
+
+      await fetchCart();
+      toast.success(`${product.name} added to cart!`);
+    } catch {
+      toast.error("Failed to add to cart.");
     }
-
-    await fetchCart();
-    toast.success(`${product.name} added to cart!`);
-  } catch {
-    toast.error("Failed to add to cart.");
-  }
-};
+  };
 
   const removeFromCart = async (productId) => {
     try {
@@ -128,7 +128,7 @@ export function CartProvider({ children }) {
       }
       await fetchCart();
       toast.success("Checkout successful!");
-      navigate("/thankyou"); // optional: create Thank You page
+      navigate("/thankyou");
     } catch (err) {
       toast.error("Checkout failed.");
     }

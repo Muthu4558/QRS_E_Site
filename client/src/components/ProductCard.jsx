@@ -33,17 +33,18 @@ const ProductCard = ({ product }) => {
 
             {/* Action Buttons */}
             <div className="mt-4 flex gap-3">
-                <button 
+                <button
                     onClick={() => addToCart(product)}
-                    className="w-1/2 py-2 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition">
+                    className="w-1/2 py-2 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition cursor-pointer">
                     Add to Cart
                 </button>
                 <button
                     onClick={() => navigate(`/products/${product._id}`)}
-                    className="w-1/2 py-2 border border-gray-300 text-gray-800 rounded-xl hover:bg-gray-100 transition">
+                    className="w-1/2 py-2 border border-gray-300 text-gray-800 rounded-xl hover:bg-gray-100 transition cursor-pointer">
                     View
                 </button>
             </div>
+
         </motion.div>
     );
 };

@@ -26,7 +26,7 @@ export function CartProvider({ children }) {
   const fetchCart = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/cart", {
+      const res = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/cart`, {
         credentials: "include",
       });
       if (res.status === 401) {
@@ -45,7 +45,7 @@ export function CartProvider({ children }) {
 
   const addToCart = async (product) => {
     try {
-      const res = await fetch("http://localhost:5000/api/cart/add", {
+      const res = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/cart/add`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -64,7 +64,7 @@ export function CartProvider({ children }) {
 
   const removeFromCart = async (productId) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/cart/remove/${productId}`, {
+      const res = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/cart/remove/${productId}`, {
         method: "DELETE",
         credentials: "include",
       });
@@ -82,7 +82,7 @@ export function CartProvider({ children }) {
   const updateQuantity = async (productId, quantity) => {
     if (quantity < 1) return;
     try {
-      const res = await fetch("http://localhost:5000/api/cart/update", {
+      const res = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/cart/update`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -101,7 +101,7 @@ export function CartProvider({ children }) {
 
   const clearCart = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/cart/clear", {
+      const res = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/cart/clear`, {
         method: "DELETE",
         credentials: "include",
       });
@@ -118,7 +118,7 @@ export function CartProvider({ children }) {
 
     const checkoutCart = async () => {
   try {
-    const res = await fetch("http://localhost:5000/api/cart/checkout", {
+    const res = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/cart/checkout`, {
       method: "POST",
       credentials: "include",
     });

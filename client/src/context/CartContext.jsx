@@ -116,6 +116,24 @@ export function CartProvider({ children }) {
     }
   };
 
+    const checkoutCart = async () => {
+  try {
+    const res = await fetch("http://localhost:5000/api/cart/checkout", {
+      method: "POST",
+      credentials: "include",
+    });
+    if (res.status === 401) {
+      handleAuthError({ response: { status: 401 } });
+      return;
+    }
+    await fetchCart();
+    toast.success("Checkout successful!");
+    navigate("/thankyou"); // optional: create Thank You page
+  } catch (err) {
+    toast.error("Checkout failed.");
+  }
+};
+
   useEffect(() => {
     fetchCart();
   }, []);
@@ -128,6 +146,7 @@ export function CartProvider({ children }) {
         removeFromCart,
         updateQuantity,
         clearCart,
+        checkoutCart,
         loading,
         fetchCart,
       }}

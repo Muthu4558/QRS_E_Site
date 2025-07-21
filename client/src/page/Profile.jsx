@@ -110,7 +110,7 @@ const Profile = () => {
             </div>
 
             {/* My Orders */}
-            <div className="bg-white shadow-md rounded-xl p-6">
+            {/* <div className="bg-white shadow-md rounded-xl p-6">
               <div className="flex items-center mb-4">
                 <FaBoxOpen className="text-3xl text-purple-600 mr-3" />
                 <h2 className="text-xl font-semibold">My Orders</h2>
@@ -124,10 +124,10 @@ const Profile = () => {
               <button className="mt-4 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md">
                 View Orders
               </button>
-            </div>
+            </div> */}
 
             {/* Address */}
-            <div className="bg-white shadow-md rounded-xl p-6">
+            {/* <div className="bg-white shadow-md rounded-xl p-6">
               <div className="flex items-center mb-4">
                 <FaMapMarkerAlt className="text-3xl text-purple-600 mr-3" />
                 <h2 className="text-xl font-semibold">Address</h2>
@@ -141,7 +141,7 @@ const Profile = () => {
               <button className="mt-4 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md">
                 Manage Address
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

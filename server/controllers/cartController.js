@@ -60,3 +60,18 @@ export const clearCart = async (req, res) => {
   await cart.save();
   res.json(cart);
 };
+
+// CHECKOUT (clears cart and optionally stores order)
+export const checkoutCart = async (req, res) => {
+  const cart = await Cart.findOne({ user: req.user._id });
+  if (!cart || cart.items.length === 0) {
+    return res.status(400).json({ message: "Cart is empty" });
+  }
+
+  // Optionally: Save to Order DB here
+  // const order = await Order.create({ user: req.user._id, items: cart.items, total });
+
+  cart.items = [];
+  await cart.save();
+  res.json({ message: "Checkout successful" });
+};

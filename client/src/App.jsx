@@ -12,6 +12,7 @@ import Accessories from "./page/Accessories";
 import Admin from "./page/Admin";
 import PrivateRoute from "./components/PrivateRoute";
 import ProductDetail from "./page/ProductDetail";
+import ThankYou from "./page/thankyou";
 
 const App = () => {
   return (
@@ -45,6 +46,7 @@ const App = () => {
           <Route path="/products/clothing" element={<Clothing />} />
           <Route path="/products/electronics" element={<Electronics />} />
           <Route path="/products/accessories" element={<Accessories />} />
+          <Route path="/thankyou" element={<ThankYou />} />
           <Route path="/products/:id" element={<ProductDetail />} />
 
           {/* Protected Admin Route */}

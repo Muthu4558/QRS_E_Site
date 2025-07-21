@@ -5,7 +5,6 @@ import { useCart } from '../context/CartContext';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// Inline Confirm Modal Component
 const ConfirmDeleteModal = ({ open, productName, onCancel, onConfirm }) => {
   if (!open) return null;
   return (
@@ -36,7 +35,7 @@ const ConfirmDeleteModal = ({ open, productName, onCancel, onConfirm }) => {
 };
 
 const Cart = () => {
-  const { cartItems, removeFromCart, updateQuantity } = useCart();
+  const { cartItems, removeFromCart, updateQuantity, checkoutCart  } = useCart();
 
   // Modal state
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -164,7 +163,9 @@ const Cart = () => {
                 <div className="text-2xl font-semibold">
                   Total: <span className="text-purple-700 font-bold">₹{total}</span>
                 </div>
-                <button className="mt-4 md:mt-0 bg-purple-600 text-white px-8 py-3 rounded-full hover:bg-purple-700 shadow-md transition duration-300">
+                <button 
+                  onClick={checkoutCart}
+                  className="mt-4 md:mt-0 bg-purple-600 text-white px-8 py-3 rounded-full hover:bg-purple-700 shadow-md transition duration-300">
                   Proceed to Checkout
                 </button>
               </div>

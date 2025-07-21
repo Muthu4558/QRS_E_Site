@@ -6,6 +6,7 @@ import {
   removeFromCart,
   updateCartItemQuantity,
   clearCart,
+  checkoutCart,
 } from "../controllers/cartController.js";
 
 const router = express.Router();
@@ -15,6 +16,7 @@ router.use(protect);
 
 router.get("/", getCart); // Get user's cart
 router.post("/add", addToCart); // Add item to cart
+router.post("/checkout", checkoutCart);
 router.put("/update", updateCartItemQuantity); // Update quantity
 router.delete("/remove/:productId", removeFromCart); // Remove item
 router.delete("/clear", clearCart); // Clear entire cart

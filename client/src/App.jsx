@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
 import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import Home from "./page/Home";
 import Login from "./page/Login";
 import Signup from "./page/Signup";
@@ -17,14 +18,13 @@ import ThankYou from "./page/thankyou";
 const App = () => {
   return (
     <Router>
-      <ToastContainer position="top-right" autoClose={3000} />
       <CartProvider>
+        <ToastContainer position="bottom-right" autoClose={3000} theme="colored" />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Signup />} />
 
-          {/* Protected Routes (User only) */}
           <Route
             path="/profile"
             element={
@@ -42,14 +42,12 @@ const App = () => {
             }
           />
 
-          {/* Public Product Routes */}
           <Route path="/products/clothing" element={<Clothing />} />
           <Route path="/products/electronics" element={<Electronics />} />
           <Route path="/products/accessories" element={<Accessories />} />
           <Route path="/thankyou" element={<ThankYou />} />
           <Route path="/products/:id" element={<ProductDetail />} />
 
-          {/* Protected Admin Route */}
           <Route
             path="/admin"
             element={
@@ -61,7 +59,6 @@ const App = () => {
         </Routes>
       </CartProvider>
     </Router>
-
   );
 };
 

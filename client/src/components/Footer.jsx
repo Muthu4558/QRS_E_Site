@@ -1,11 +1,10 @@
-import React from "react";
 import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 
 const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white pt-12 pb-8 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
-        
+
         {/* Brand Info */}
         <div>
           <h2 className="text-2xl font-bold text-purple-400 mb-2">QRS Product</h2>

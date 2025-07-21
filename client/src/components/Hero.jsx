@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import heroImg from "../assets/hero.svg";
-import bgImg from "../assets/herobg.jpg"; // Replace with your own image path if different
+import bgImg from "../assets/herobg.jpg";
 
 const Hero = () => {
   return (
@@ -17,7 +17,6 @@ const Hero = () => {
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 flex flex-col-reverse lg:flex-row items-center justify-between text-white">
-        {/* Text Content */}
         <motion.div
           initial={{ y: 40, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}

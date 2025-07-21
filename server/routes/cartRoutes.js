@@ -11,14 +11,13 @@ import {
 
 const router = express.Router();
 
-// All routes below are protected (must be logged in)
 router.use(protect);
 
-router.get("/", getCart); // Get user's cart
-router.post("/add", addToCart); // Add item to cart
+router.get("/", getCart); 
+router.post("/add", addToCart);
 router.post("/checkout", checkoutCart);
-router.put("/update", updateCartItemQuantity); // Update quantity
-router.delete("/remove/:productId", removeFromCart); // Remove item
-router.delete("/clear", clearCart); // Clear entire cart
+router.put("/update", updateCartItemQuantity);
+router.delete("/remove/:productId", removeFromCart);
+router.delete("/clear", clearCart);
 
 export default router;

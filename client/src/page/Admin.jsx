@@ -1,8 +1,7 @@
-// Admin.jsx
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { MdAddPhotoAlternate, MdDelete, MdEdit } from 'react-icons/md';
-import { FaPlus, FaCheckCircle, FaTimesCircle, FaSignOutAlt } from 'react-icons/fa'; // ✅ Added logout icon
+import { FaPlus, FaCheckCircle, FaTimesCircle, FaSignOutAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -29,7 +28,6 @@ const Admin = () => {
     const [showModal, setShowModal] = useState(false);
     const [productToDelete, setProductToDelete] = useState(null);
 
-    // ✅ Fetch products on load
     useEffect(() => {
         fetchProducts();
     }, []);
@@ -134,7 +132,6 @@ const Admin = () => {
         try {
             await axios.post(`${import.meta.env.VITE_APP_BASE_URL}/api/auth/logout`, {}, { withCredentials: true });
 
-            // JWT from localStorage
             localStorage.removeItem("token");
 
             toast.success("Logged out");

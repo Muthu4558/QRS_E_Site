@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import ProductCard from '../components/ProductCard';
 import Navbar from '../components/Navbar';
@@ -56,7 +56,7 @@ const Accessories = () => {
     <>
       <Navbar />
       <div className="container mx-auto px-4 sm:px-6 lg:px-36 mt-25 mb-20">
-        <h2  className="text-3xl font-bold text-purple-700 mb-8 text-center">Accessories</h2>
+        <h2 className="text-3xl font-bold text-purple-700 mb-8 text-center">Accessories</h2>
         {/* Filters */}
         <div className="bg-white/70 backdrop-blur-md rounded-xl shadow-md p-6 mb-10 flex flex-col md:flex-row md:items-center gap-4 md:gap-6 transition-all">
           <input

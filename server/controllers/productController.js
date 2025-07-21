@@ -14,7 +14,7 @@ export const createProduct = async (req, res) => {
       brand,
       category,
       image,
-      featured: featured === 'true', // convert string to boolean
+      featured: featured === 'true',
     });
 
     res.status(201).json(product);

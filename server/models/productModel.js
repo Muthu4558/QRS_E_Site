@@ -1,4 +1,3 @@
-// models/productModel.js
 import mongoose from 'mongoose';
 
 const productSchema = new mongoose.Schema({
@@ -10,7 +9,7 @@ const productSchema = new mongoose.Schema({
   stock: { type: Number, default: 0 },
   brand: { type: String, default: "N/A" },
   image: { type: String },
-  featured: { type: Boolean, default: false } // NEW
+  featured: { type: Boolean, default: false }
 }, { timestamps: true });
 
 const Product = mongoose.model('Product', productSchema);

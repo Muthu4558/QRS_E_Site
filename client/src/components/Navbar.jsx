@@ -24,9 +24,8 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`bg-white shadow-lg fixed top-0 left-0 w-full z-50 transition-transform duration-300 ${
-        showNavbar ? "translate-y-0" : "-translate-y-full"
-      }`}
+      className={`bg-white shadow-lg fixed top-0 left-0 w-full z-50 transition-transform duration-300 ${showNavbar ? "translate-y-0" : "-translate-y-full"
+        }`}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         <Link to="/" className="text-2xl font-bold text-purple-600">QRS Product</Link>

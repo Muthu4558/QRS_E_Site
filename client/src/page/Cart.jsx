@@ -17,13 +17,13 @@ const ConfirmDeleteModal = ({ open, productName, onCancel, onConfirm }) => {
         </p>
         <div className="mt-4 flex justify-center gap-4">
           <button
-            className="bg-purple-600 text-white px-5 py-2 rounded hover:bg-purple-700"
+            className="bg-purple-600 text-white px-5 py-2 rounded hover:bg-purple-700 cursor-pointer"
             onClick={onConfirm}
           >
             Yes, Remove
           </button>
           <button
-            className="bg-gray-200 text-gray-700 px-5 py-2 rounded hover:bg-gray-300"
+            className="bg-gray-200 text-gray-700 px-5 py-2 rounded hover:bg-gray-300 cursor-pointer"
             onClick={onCancel}
           >
             Cancel
@@ -35,27 +35,23 @@ const ConfirmDeleteModal = ({ open, productName, onCancel, onConfirm }) => {
 };
 
 const Cart = () => {
-  const { cartItems, removeFromCart, updateQuantity, checkoutCart  } = useCart();
+  const { cartItems, removeFromCart, updateQuantity, checkoutCart } = useCart();
 
-  // Modal state
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [confirmProductId, setConfirmProductId] = useState(null);
   const [confirmProductName, setConfirmProductName] = useState('');
 
-  // For total price calculation
   const total = cartItems.reduce(
     (acc, item) => acc + (item.product.offerPrice || item.product.price) * item.quantity,
     0
   );
 
-  // When user clicks delete icon
   const askDelete = (productId, productName) => {
     setConfirmProductId(productId);
     setConfirmProductName(productName);
     setConfirmOpen(true);
   };
 
-  // Confirm modal: Remove item
   const handleConfirmDelete = () => {
     removeFromCart(confirmProductId);
     toast.success(`${confirmProductName} removed from cart`);
@@ -64,7 +60,6 @@ const Cart = () => {
     setConfirmProductName('');
   };
 
-  // Cancel modal
   const handleCancelDelete = () => {
     toast.info('Item removal cancelled');
     setConfirmOpen(false);
@@ -75,7 +70,6 @@ const Cart = () => {
   return (
     <>
       <Navbar />
-      {/* Confirmation modal (shows as popup only when confirmOpen is true) */}
       <ConfirmDeleteModal
         open={confirmOpen}
         productName={confirmProductName}
@@ -147,7 +141,7 @@ const Cart = () => {
                       </div>
                       {/* Delete icon */}
                       <button
-                        className="text-red-500 hover:text-red-700 text-2xl transition"
+                        className="text-red-500 hover:text-red-700 text-2xl transition cursor-pointer"
                         title="Remove item"
                         onClick={() => askDelete(item.product._id, item.product.name)}
                         aria-label="Remove from cart"
@@ -163,9 +157,9 @@ const Cart = () => {
                 <div className="text-2xl font-semibold">
                   Total: <span className="text-purple-700 font-bold">₹{total}</span>
                 </div>
-                <button 
+                <button
                   onClick={checkoutCart}
-                  className="mt-4 md:mt-0 bg-purple-600 text-white px-8 py-3 rounded-full hover:bg-purple-700 shadow-md transition duration-300">
+                  className="mt-4 md:mt-0 bg-purple-600 text-white px-8 py-3 rounded-full hover:bg-purple-700 shadow-md transition duration-300 cursor-pointer">
                   Proceed to Checkout
                 </button>
               </div>

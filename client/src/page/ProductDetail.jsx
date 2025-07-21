@@ -39,12 +39,10 @@ const ProductDetail = () => {
             </div>
         );
 
-    // Calculate discount percentage if offerPrice exists
     const discountPercent = product.offerPrice
         ? Math.round(((product.price - product.offerPrice) / product.price) * 100)
         : 0;
 
-    // Fake rating (replace with real rating if available)
     const rating = product.rating ? product.rating : 4.2;
     const fullStars = Math.floor(rating);
     const halfStar = rating % 1 >= 0.5;
@@ -72,10 +70,8 @@ const ProductDetail = () => {
 
                     {/* Info */}
                     <div className="flex flex-col flex-grow max-w-full md:max-w-md space-y-4">
-                        {/* Title */}
                         <h1 className="text-4xl font-extrabold text-indigo-900">{product.name}</h1>
 
-                        {/* Pricing */}
                         <div className="flex items-baseline space-x-3">
                             <span className="text-3xl font-bold text-teal-700">
                                 ₹{product.offerPrice ?? product.price}
@@ -127,7 +123,7 @@ const ProductDetail = () => {
                                     focus:outline-none focus:ring-4 focus:ring-teal-300
                                     active:outline-none active:ring-2 active:ring-indigo-400
                                 "
-                                >
+                            >
                                 <FaShoppingCart className="w-5 h-5" />
                                 Add to Cart
                             </motion.button>
@@ -149,8 +145,8 @@ const ProductDetail = () => {
                     <div className="flex border-b border-gray-200 mb-6">
                         <button
                             className={`py-3 px-6 font-semibold transition ${activeTab === "specs"
-                                    ? "border-b-4 border-teal-600 text-teal-600"
-                                    : "text-gray-600 hover:text-teal-600"
+                                ? "border-b-4 border-teal-600 text-teal-600"
+                                : "text-gray-600 hover:text-teal-600"
                                 }`}
                             onClick={() => setActiveTab("specs")}
                         >
@@ -158,8 +154,8 @@ const ProductDetail = () => {
                         </button>
                         <button
                             className={`py-3 px-6 font-semibold transition ${activeTab === "reviews"
-                                    ? "border-b-4 border-indigo-600 text-indigo-600"
-                                    : "text-gray-600 hover:text-indigo-600"
+                                ? "border-b-4 border-indigo-600 text-indigo-600"
+                                : "text-gray-600 hover:text-indigo-600"
                                 }`}
                             onClick={() => setActiveTab("reviews")}
                         >
@@ -175,7 +171,6 @@ const ProductDetail = () => {
                             transition={{ duration: 0.3 }}
                             className="text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-6"
                         >
-                            {/* Replace below specs with real product specs */}
                             <div>
                                 <h3 className="font-semibold mb-2">General</h3>
                                 <ul className="list-disc list-inside space-y-1">
@@ -203,7 +198,6 @@ const ProductDetail = () => {
                             transition={{ duration: 0.3 }}
                             className="space-y-6"
                         >
-                            {/* Replace with dynamic reviews */}
                             <Review
                                 author="Jane Doe"
                                 rating={4.5}

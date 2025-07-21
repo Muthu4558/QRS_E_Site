@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import ProductCard from './ProductCard'; // ✅ Import your component
+import ProductCard from './ProductCard';
 
 const FeaturedProducts = () => {
   const [products, setProducts] = useState([]);
@@ -50,7 +50,7 @@ const FeaturedProducts = () => {
               >
                 {items.map((product, i) => (
                   <SwiperSlide key={product._id || i} className="px-1 sm:px-2 py-6">
-                    <ProductCard product={product} /> {/* ✅ Reusable Component */}
+                    <ProductCard product={product} />
                   </SwiperSlide>
                 ))}
               </Swiper>

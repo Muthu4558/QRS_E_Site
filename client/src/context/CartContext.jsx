@@ -55,8 +55,12 @@ export function CartProvider({ children }) {
         return;
       }
 
-      await fetchCart();
+      // Show toast immediately after the response
       toast.success(`${product.name} added to cart!`);
+
+      // Refresh cart in background
+      fetchCart();
+
     } catch {
       toast.error("Failed to add to cart.");
     }
@@ -72,8 +76,11 @@ export function CartProvider({ children }) {
         handleAuthError({ response: { status: 401 } });
         return;
       }
-      await fetchCart();
+
       toast.info("Item removed from cart.");
+
+      fetchCart();
+
     } catch (err) {
       toast.error("Failed to remove item.");
     }
@@ -92,8 +99,11 @@ export function CartProvider({ children }) {
         handleAuthError({ response: { status: 401 } });
         return;
       }
-      await fetchCart();
+
       toast.success("Cart updated successfully.");
+
+      fetchCart();
+
     } catch (err) {
       toast.error("Failed to update cart.");
     }
@@ -109,8 +119,11 @@ export function CartProvider({ children }) {
         handleAuthError({ response: { status: 401 } });
         return;
       }
-      await fetchCart();
+
       toast.info("Cart cleared.");
+
+      fetchCart();
+
     } catch (err) {
       toast.error("Failed to clear cart.");
     }
@@ -126,9 +139,11 @@ export function CartProvider({ children }) {
         handleAuthError({ response: { status: 401 } });
         return;
       }
-      await fetchCart();
+
       toast.success("Checkout successful!");
       navigate("/thankyou");
+      fetchCart();
+
     } catch (err) {
       toast.error("Checkout failed.");
     }
@@ -136,6 +151,7 @@ export function CartProvider({ children }) {
 
   useEffect(() => {
     fetchCart();
+    // eslint-disable-next-line
   }, []);
 
   return (

@@ -28,13 +28,13 @@ const Navbar = () => {
         }`}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        <Link to="/" className="text-2xl font-bold text-purple-600">QRS Product</Link>
+        <Link to="/" className="text-2xl font-bold text-purple-600">QRs Product</Link>
 
         {/* Mobile toggle */}
         <div className="md:hidden">
           <button onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-          </button>
+          </button>     
         </div>
 
         {/* Desktop Menu */}
